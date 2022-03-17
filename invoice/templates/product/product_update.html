@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="card-header">
+        <h2 > Products & Services Update</h2>
+     </div>
+
+    <table class="table table-striped">
+       <tbody>
+          <tr>
+             <td>
+                <form action="" method="post" autocomplete="off">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="col-md-3">
+                            {{form.item_code|as_crispy_field}}
+                        </div>
+                        <div class="col-md-5">
+                            {{form.item_name|as_crispy_field}}
+                        </div>
+<div class="col-md-5">
+                            {{form.item_name_in_arabic|as_crispy_field}}
+                        </div>
+                            <div class="col-md-3">
+                                {{form.price|as_crispy_field}}
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-save"></i>
+                                    save</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-danger btn-block btn-lg float-right"><i class="fas fa-backspace"></i>
+                
+                                    cancel</button>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    
+                </form>
+             </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock content %}

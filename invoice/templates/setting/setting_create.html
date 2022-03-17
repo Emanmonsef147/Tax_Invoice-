@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="card-header">
+        <h2>Seller</h2>
+    </div>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td>
+                <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div style="text-align:right">الاسم</div>
+                            {{form.organization_name|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                            <div style="text-align:right">رقم المبني</div>
+                            {{form.building_number|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                            <div style="text-align:right">اسم الشارع</div>
+                            {{form.street_name|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right"> الحي</div>
+
+                            {{form.district|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">المدينة</div>
+
+                            {{form.city|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">المدينة</div>
+
+                            {{form.country|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">الرمز البريدي</div>
+
+                            {{form.postal_code|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">رقم اضافي للعنوان</div>
+
+                            {{form.additional_number|as_crispy_field}}
+                        </div>
+
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">الرقم الضريبي</div>
+
+                            {{form.vat_number|as_crispy_field}}
+                        </div>
+                        <div class="col-md-6">
+                                                        <div style="text-align:right">معرف اخر</div>
+
+                            {{form.other_seller_id|as_crispy_field}}
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-save"></i>
+                                save
+                            </button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock content %}

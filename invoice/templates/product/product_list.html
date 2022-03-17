@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="card-header">
+        <a href="{% url 'product_create' %}" class="btn btn-light" style="float:right">
+            <i class="fas fa-plus"></i>Add New
+        </a>
+        <h2>Products & Services List </h2>
+    </div>
+
+    <br>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>
+                #
+            </td>
+            <td>Item Code</td>
+            <td>Item Name</td>
+            <td>Price</td>
+            <td>Action</td>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for product in product_list %}
+        <tr>
+            <td>{{product.id}}</td>
+            <td>{{product.item_code}}</td>
+            <td>{{product.item_name}}</td>
+            <td>{{product.price}}</td>
+            <td>
+                <a href="{% url 'product_update' product.id %}" class="btn text-secondary px-0">
+                    <i class="far fa-edit fa-lg"></i>
+                </a>
+
+                <a href="{% url 'product_view' product.id  %}" class="btn text-secondary px-0">
+                    <i class="fas fa-eye fa-lg"></i>
+                </a>
+
+                <form action="{% url 'product_delete'  product.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">
+                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+
+                    </button>
+                </form>
+
+            </td>
+
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+
+    {% endblock content %}

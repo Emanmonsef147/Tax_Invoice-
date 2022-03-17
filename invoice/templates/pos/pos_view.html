@@ -1,0 +1,443 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+{% block custom_css %}
+<style type="text/css" media="all">
+    @media print {
+        @page {
+            size: 5.5in 8.5in;
+            size: landscape;
+        }
+
+        #btnPrint {
+            display: none !important;
+        }
+
+        table,
+        td {
+            /*width: 50% !important;*/
+            /*height: 50px !important;*/
+            margin: 0;
+            text-align: center;
+        }
+
+        table #table1 {
+            float: left;
+            margin-left: 120px;
+
+        }
+
+        table #table2 {
+            float: right;
+            margin-right: 120px;
+        }
+
+        table #table3 {
+            float: left;
+            margin-left: 120px;
+        }
+
+        table #table4 {
+            float: right;
+            margin-right: 120px;
+
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        display: flex;
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        flex: 50%;
+        padding: 5px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        /*border: 1px solid #ddd;*/
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+
+</style>
+{% endblock custom_css %}
+
+<div class="col-12" style="margin-top: 40px">
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="column">
+
+                    <table class="table table-bordered border-primary" id="table1">
+
+                        <tbody>
+                        <tr>
+                            <td style="text-align:center">Date Of Supply</td>
+                            <td><input type="text" name="pos" class="form-control"
+                                       value="{{invoice_data.date_of_supply}}"
+                                       readonly>
+                            </td>
+                            <td style="text-align:center">تاريخ التوريد</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center">Branch</td>
+                            <td><input type="text" name="pos" class="form-control" value="{{invoice_data.branch}}"
+                                       readonly>
+                            </td>
+                            </td>
+                            <td style="text-align:center"> الفرع</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">Salesman Name</td>
+                            <td><input type="text" name="pos" class="form-control"
+                                       value="{{invoice_data.salesman_name}}" readonly></td>
+                            </td>
+                            <td style="text-align:center"> اسم البائع</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <div class="column">
+
+                <table class="table table-bordered border-primary" id="table2">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Invoice Number</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{invoice_data.invoice_number}}" readonly>
+                        </td>
+                        <td style="text-align:center"> رقم الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Invoice issue Date</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{invoice_data.invoice_issue_date}}" readonly>
+                        </td>
+                        <td style="text-align:center"> تاريخ اصدار الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Page No</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{invoice_data.page_number}}"
+                                   readonly>
+                        </td>
+                        <td style="text-align:center"> رقم الصفحه</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="col-12">
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="column">
+                <table class="table table-bordered" id="table3">
+                    <thead>
+
+                    <th></th>
+                    <th></th>
+                    <th style="text-align:right">المورد</th>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Name</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ setting_data_view.organization_name }}"
+                                   style="height:25px" readonly>
+                        </td>
+
+                        <td style="text-align:center">الاسم</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Building No</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ setting_data_view.building_number }}"
+                                   style="height:25px" readonly>
+                        </td>
+
+                        <td style="text-align:center">رقم المبني</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Street Name</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ setting_data_view.street_name }}"
+                                   style="height:25px" readonly>
+                        </td>
+
+                        <td style="text-align:center">اسم الشارع</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">District</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{ setting_data_view.district }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center"> الحي</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">City</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{ setting_data_view.city }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center"> المدينة</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Country</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{ setting_data_view.country }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center">البلد</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Postal Code</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{setting_data_view.postal_code }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center">الرمز البريدي</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Additional No</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{  setting_data_view.additional_number }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">VAT Number</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ setting_data_view.vat_number  }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center">الرقم الضريبي</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Other Seller ID</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ setting_data_view.other_seller_id }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center"> معرف اخر</td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="column">
+
+                <table class="table table-bordered" id="table4">
+                    <thead>
+
+                    <th>Buyer</th>
+                    <th></th>
+                    <th style="text-align: right">العميل</th>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Name</td>
+                        <td><input type="text" class="form-control" value="{{ invoice_data.buyer_organization_name }}"
+                                   style="height:25px" readonly>
+                        </td>
+                        <td style="text-align:center">الاسم</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Building No</td>
+                        <td><input type="text" class="form-control" value="{{ invoice_data.building_number }}"
+                                   style="height:25px" readonly></td>
+                        <td style="text-align:center">رقم المبني</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Street Name</td>
+                        <td><input type="text" class="form-control" value="{{ invoice_data.street_name }}"
+                                   style="height:25px" readonly></td>
+                        <td style="text-align:center">اسم الشارع</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">District</td>
+                        <td><input type="text" class="form-control" value="{{ invoice_data.district }}"
+                                   style="height:25px" readonly></td>
+                        <td style="text-align:center"> الحي</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">City</td>
+                        <td><input type="text" class="form-control" value="{{ invoice_data.city }}"
+                                   style="height:25px" readonly></td>
+                        <td style="text-align:center"> المدينة</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Country</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{ invoice_data.country }}"
+                                   style="height:25px" readonly></td>
+                        <td style="text-align:center">البلد</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Postal Code</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ invoice_data.postal_code }}" style="height:25px" readonly></td>
+                        <td style="text-align:center">الرمز البريدي</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Additional No</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ invoice_data.additional_number }}" style="height:25px" readonly></td>
+                        <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">VAT Number</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ invoice_data.vat_number }}" style="height:25px" readonly></td>
+                        <td style="text-align:center">الرقم الضريبي</td>
+
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Other Buyer ID</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{ invoice_data.other_buyer_id }}" style="height:25px" readonly></td>
+                        <td style="text-align:center"> معرف اخر</td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+            <div class="col-md-12">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <td>Item Code</td>
+                        <td>item Name</td>
+                        <td>Description</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                        <td>Taxable Amount</td>
+                        <td>Discount</td>
+                        <td>Tax Rate</td>
+                        <td>Tax Amount</td>
+                        <td>Sub Total</td>
+
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>{{product_data.item_code}}</td>
+                        <td>{{product_data.item_name}}</td>
+                        <td>{{invoice_data.description}}</td>
+                        <td>{{invoice_data.unit_price}}</td>
+                        <td>{{invoice_data.quantity}}</td>
+                        <td>{{invoice_data.taxable_amount}}</td>
+                        <td>{{invoice_data.discount}}</td>
+                        <td>{{invoice_data.tax_rate}} %</td>
+                        <td>{{invoice_data.tax_amount}}</td>
+                        <td>{{invoice_data.sub_total}}</td>
+
+
+                    </tr>
+
+                </table>
+            </div>
+
+
+            <div class="col-md-12">
+                <table class="table table-bordered" style="width:700px;
+    float:right;">
+
+                    <tr>
+
+                        <td>Total Exclude Vat</td>
+                        <td>{{invoice_data.total_exclude_vat}}</td>
+                    </tr>
+                    <tr>
+                        <td>Discount</td>
+                        <td>{{invoice_data.discount}}</td>
+                    </tr>
+
+                    <tr>
+
+
+                        <td>Total Taxable Amount (Excluding Vat)</td>
+                        <td>{{invoice_data.total_taxable_amount_exclude_vat}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Vat</td>
+                        <td>{{invoice_data.total_vat}}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Amount Due</td>
+                        <td>{{invoice_data.total_amount_due}}</td>
+                    </tr>
+
+
+                </table>
+                <img src="{% static 'images/encoded_img2.png' %}" alt="qrcode" style="width:300px">
+            </div>
+
+            
+
+            
+            <div class="col-md-3">
+
+
+                <button id="btnPrint" class="hidden-print">Print</button>
+            </div>
+          
+
+            <script>
+                const $btnPrint = document.querySelector("#btnPrint");
+
+                $btnPrint.addEventListener("click", () => {
+                    window.print();
+                });
+            </script>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock content %}

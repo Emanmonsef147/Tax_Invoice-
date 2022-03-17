@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="col-12">
+
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-5">
+                <form action="" method="post" autocomplete="off">
+                    {%csrf_token%}
+
+                    <table class="table table-bordered border-primary">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td style="text-align:center">Date Of Supply</td>
+                            <td>{{invoice_form.date_of_supply}}</td>
+                            <!--                            <td><input type="date" name="invoice" class="form-control"-->
+                            <!--                                       value="{{invoice_form.date_of_supply}}">-->
+                            <!--                            </td>-->
+                            <td style="text-align:center">تاريخ التوريد</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align:center">Branch</td>
+                            <!--                            <td><input type="text" name="pos" class="form-control" value="{{invoice_form.branch}}">-->
+                            <!--                            </td>-->
+                            <td>{{invoice_form.branch}}</td>
+
+                            <td style="text-align:center"> الفرع</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center">Salesman Name</td>
+                            <!--                            <td><input type="text" name="pos" class="form-control"-->
+                            <!--                                       value="{{invoice_form.salesman_name}}"></td>-->
+
+                            <td>{{invoice_form.salesman_name}}</td>
+
+                            <td style="text-align:center"> اسم البائع</td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+
+            <div class="col-md-5">
+                <table class="table table-bordered border-primary" style="margin-left: 215px;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Invoice Number</td>
+                        <td>{{invoice_form.invoice_number}}</td>
+<!--                        <td><input type="text" name="pos" class="form-control"-->
+<!--                                   value="{{invoice_data.invoice_number}}" readonly>-->
+<!--                        </td>-->
+                        <!--                         <td>{{form_invoice.invoice_number}}</td>-->
+
+                        <td style="text-align:center"> رقم الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Inoice issue Date</td>
+                        <td>{{invoice_form.invoice_issue_date}}</td>
+<!--                        <td><input type="text" name="pos" class="form-control"-->
+<!--                                   value="{{invoice_data.invoice_issue_date}}" >-->
+<!--                        </td>-->
+                        <!--                                                 <td>{{form_invoice.invoice_issue_date}}</td>-->
+
+                        <td style="text-align:center"> تاريخ اصدار الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Page No</td>
+                        <td>{{invoice_form.page_number}}</td>
+<!--                        <td><input type="text" name="pos" class="form-control"-->
+<!--                                   value="{{invoice_data.page_number}}"-->
+<!--                                   >-->
+<!--                        </td>-->
+                        <!--                                                                         <td>{{form_invoice.page_number}}</td>-->
+
+                        <td style="text-align:center"> رقم الصفحه</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"></td>
+                        <td>
+                        </td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="col-12">
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <thead>
+
+                                <th></th>
+                                <th></th>
+                                <th style="text-align:right">المورد</th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td style="text-align:center">Name</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.organization_name }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">الاسم</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Building No</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.building_number }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">رقم المبني</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Street Name</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.street_name }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">اسم الشارع</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">District</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.district }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center"> الحي</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">City</td>
+                                    <td><input type="text" class="form-control" value="{{ setting_data.city }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center"> المدينة</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Country</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.country }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">البلد</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Postal Code</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.postal_code }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">الرمز البريدي</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"> Additional No</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.additional_number }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">VAT Number</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.vat_number }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center">الرقم الضريبي</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Other Buyer ID</td>
+                                    <td><input type="text" class="form-control"
+                                               value="{{ setting_data.other_seller_id }}"
+                                               style="height:25px" readonly>
+                                    </td>
+
+                                    <td style="text-align:center"> معرف اخر</td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <thead>
+
+                                <th>Buyer</th>
+                                <th></th>
+                                <th style="text-align: right">العميل</th>
+
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td style="text-align:center">Name</td>
+                                    <td>{{buyer_form.buyer_organization_name}}</td>
+                                    <!--                            <td><input type="text" class="form-control" value="{{ form.buyer_organization_name }}"-->
+                                    <!--                                       style="height:25px">-->
+                                    <!--                            </td>-->
+                                    <!--                             <td>{{form_buyer.organization_name}}</td>-->
+                                    <td style="text-align:center">الاسم</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Building No</td>
+                                    <!--                            <td><input type="text" class="form-control" value="{{ buyer_form.building_number }}"-->
+                                    <!--                                       style="height:25px"></td>-->
+                                    <td>{{buyer_form.building_number}}</td>
+                                    <td style="text-align:center">رقم المبني</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Street Name</td>
+                                    <!--                            <td><input type="text" class="form-control" value="{{ buyer_form.street_name }}"-->
+                                    <!--                                       style="height:25px"></td>-->
+                                    <td>{{buyer_form.street_name}}</td>
+                                    <td style="text-align:center">اسم الشارع</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">District</td>
+                                    <!--                            <td><input type="text" class="form-control" value="{{ buyer_form.district }}"-->
+                                    <!--                                       style="height:25px"></td>-->
+                                    <td>{{buyer_form.district}}</td>
+
+                                    <td style="text-align:center"> الحي</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">City</td>
+                                    <!--                            <td><input type="text" class="form-control" value="{{ buyer_form.city }}"-->
+                                    <!--                                       style="height:25px"></td>-->
+                                    <td>{{buyer_form.city}}</td>
+
+                                    <td style="text-align:center"> المدينة</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Country</td>
+                                    <!--                            <td><input type="text" name="pos" class="form-control" value="{{ buyer_form.country }}"-->
+                                    <!--                                       style="height:25px"></td>-->
+                                    <td>{{buyer_form.country}}</td>
+                                    <td style="text-align:center">البلد</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Postal Code</td>
+                                    <!--                            <td><input type="text" name="pos" class="form-control"-->
+                                    <!--                                       value="{{ buyer_form.postal_code }}" style="height:25px"></td>-->
+                                    <td>{{buyer_form.postal_code}}</td>
+
+                                    <td style="text-align:center">الرمز البريدي</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center"> Additional No</td>
+                                    <!--                            <td><input type="text" name="pos" class="form-control"-->
+                                    <!--                                       value="{{ buyer_form.additional_number }}" style="height:25px"></td>-->
+                                    <td>{{buyer_form.additional_number}}</td>
+
+                                    <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">VAT Number</td>
+                                    <!--                            <td><input type="text" name="pos" class="form-control"-->
+                                    <!--                                       value="{{ buyer_form.vat_number }}" style="height:25px"></td>-->
+                                    <td>{{buyer_form.vat_number}}</td>
+
+                                    <td style="text-align:center">الرقم الضريبي</td>
+
+                                </tr>
+                                <tr>
+                                    <td style="text-align:center">Other Buyer ID</td>
+                                    <!--                            <td><input type="text" name="pos" class="form-control"-->
+                                    <!--                                       value="{{ buyer_form.other_buyer_id }}" style="height:25px"></td>-->
+                                    <td>{{buyer_form.other_buyer_id}}</td>
+                                    <td style="text-align:center"> معرف اخر</td>
+
+                                </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <table class="table table-striped">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+
+                                                <div class="row">
+                                                <div class="col-md-1">
+                                                    {{pos_form.item_code|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    {{pos_form.description|as_crispy_field}}
+                                                </div>
+                                                <div id="id_line_one_unit_price" class="col-md-1">
+                                                    {{pos_form.unit_price|as_crispy_field}}
+                                                </div>
+                                                <div id="id_line_one_quantity" class="col-md-1">
+                                                    {{pos_form.quantity|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-1">
+                                                    {{pos_form.taxable_amount|as_crispy_field}}
+                                                </div>
+                                                <div id="id_line_one_total_price" class="col-md-1">
+                                                    {{pos_form.discount|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-2">
+                                                    {{pos_form.tax_rate|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-1">
+                                                    {{pos_form.tax_amount|as_crispy_field}}
+                                                </div>
+                                                <div class="col-md-1">
+                                                    {{pos_form.sub_total|as_crispy_field}}
+                                                </div>
+                                            </div>
+
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                    <br>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit"
+                                                class="btn btn-primary btn-block">
+                                            <i class="fa-solid fa-bookmark"></i>
+                                            save
+                                        </button>
+                                        &nbsp;
+                                        <a href="{% url 'pos_list' %}"
+                                           class="btn btn-primary btn-block float_right"><i
+                                                class="fa-solid fa-list"></i>
+
+                                            Back to list</a>
+                                    </div>
+                                    <div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}

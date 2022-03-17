@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="margin-top: 40px">
+    <div class="card-header">
+        <a href="{% url 'invoice_create' %}" class="btn btn-light" style="float:right">
+            <i class="fas fa-plus"></i>Add New
+        </a>
+
+        <h2>Invoice List</h2>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Invoice Number</td>
+            <td>Buyer Name</td>
+            <td>Invoice Issue Date</td>
+            <td>Invoice Total Amount</td>
+            <td>Actions</td>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for invoice in invoice_list %}
+        <tr>
+            <td> {{ invoice.id }}</td>
+            <td> {{ invoice.buyer_organization_name }}</td>
+            <td> {{ invoice.invoice_issue_date }}</td>
+            <td> {{ invoice.total_amount_due }}</td>
+
+
+            <td>
+
+                <a href="{% url 'invoice_view' invoice.id  %}" class="btn text-secondary px-0">
+                    <i class="fas fa-eye fa-lg"></i>
+                </a>
+
+
+                <form action="{% url 'invoice_delete'  invoice.id  %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">
+                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

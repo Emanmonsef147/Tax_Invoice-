@@ -1,0 +1,559 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block custom_css %}
+<style>
+  @media (max-width: 767px){
+    .navbar .container li {
+      font-size: 14px;
+      margin: 6px 5px;
+    }
+  }
+  .navbar li {
+    padding: 8px 19px;
+    margin: 6px 10px;
+    background-color: #fff;
+    border-radius: 23px;
+    width: 30%;
+  }
+  
+  #rec{
+    font-size: 12px;
+    font-family: 'Times New Roman';
+  }
+  
+  td,
+  th,
+  tr,
+  table {
+    border-top: 1px solid black;
+    border-collapse: collapse;
+  }
+  
+  td.description,
+  th.description {
+    width: 75px;
+    max-width: 75px;
+  }
+  
+  td.quantity,
+  th.quantity {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+  }
+  
+  td.price,
+  th.price {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+  }
+  
+  .centered {
+    text-align: center;
+    align-content: center;
+  }
+  
+  .ticket {
+    width: 155px;
+    max-width: 155px;
+  }
+  
+  img {
+    max-width: inherit;
+    width: inherit;
+    max-height: inherit;
+    height: inherit;
+  }
+  
+  @media print {
+    .hidden-print,
+    .hidden-print * {
+      display: none !important;
+    }
+  }
+</style>
+{% endblock custom_css %}
+{% block content %}
+ 
+ <div id="like_button_container"></div>
+<div id="products" class="mx-auto">
+  <div id="rec" class="col-md-6" hidden>
+    <div class="card text-center m-1" >
+      <div class="card-body">
+        <h5 class="card-title">{%trans "Order #" %} {{order.id}}</h5>
+        <a href="#" id="view" onclick="get_order('{{order.id}}')" class="card-link">{%trans "View" %}</a>
+      </div>
+    </div>
+    <div id="invoice_details{{order.id}}" style="border: 1px solid #ddd; width:225px;">
+      <img src="https://drive.google.com/uc?export=view&id=1QcPZdehJb5vfrjulw5ARXzMqKH16uUaG" style="width: 100px; hieght:50px;" alt="Logo">
+      <p class="centered">Valve Coffee
+        <br>{{order.updated_date}}
+        
+        <br>رقم الفاتورة:order{{order.id}}
+        <br>نوع الطلب:{{order.order_type}}
+        <br>الرقم الضريبي:
+        <br>الرقم التسلسلي:</p>
+        <table>
+          <thead>
+            <tr>
+              <th class="quantity">النوع</th>
+              <th class="description">العدد</th>
+              <th class="price">السعر</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in items %}
+            <tr>
+              <td>{{item.name}}</td>
+              <td>{{item.quantity}}</td>
+              <td class="price">${{item.unit_price| floatformat:2}}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+              <th>المجموع قبل الضريبة:</th>
+              <td>{{order.sub_total| floatformat:2 }}</td>
+            </tr>
+            <tr>
+              <th>ضريبة القيمة المضافة 15%:</th>
+              <td>{{ order.tax| floatformat:2 }}</td>
+            </tr>
+            <tr>
+              <th>الخصم:</th>
+              <td>{{order.total_discount | floatformat:2 }}</td>
+            </tr>
+            <tr>
+              <th>المجموع:</th>
+              <td>{{order.total_amount | floatformat:2 }}</td>
+            </tbody>
+            
+          </table>
+          <p class="centered">
+            المحل غير مسؤول عن فقدان المتعلقات الشخصية<br>
+            Wi-Fi: valve@123
+            <br>Thanks for your Visit</p>
+            
+          </div>
+        </div>
+        
+        <div class="d-flex flex-row-reverse m-1">
+ <a id="newOrder" href="#" class="btn btn-primary update-cart" onclick="get_order('')" data-action="new_order">{%trans "New Order" %}</a>
+</div>
+
+        
+        <div class="container-fluid">
+          <div class="row">
+            <div id="pro" class="row d-flex align-content-start flex-wrap col-md-9">
+                <div class="d-flex align-items-start m-2">
+              
+              {% for cate in parent_categories %}
+              <div>
+                {% if cate.is_parent %}
+                <!--new design -->
+                <div>
+                  <button type="button"  onclick="get_parent_cate('{{cate.id}}','{{order.id}}')" class="btn btn-outline-info ">
+                    {%if LANGUAGE_CODE == 'ar'%}
+                      {{cate.name_ar}}
+            {% else %}    
+            {{cate.name}}
+            {% endif %}
+                  </button>
+                </div>
+                <!--end new design -->
+                
+                {% endif %}
+                <div class="d-flex align-items-center flex-column"> 
+                {% for cate2 in child_categories %}
+                {% if cate2.parent == cate.id|slugify or cate2.parent == cate.name %}
+                <div style="margin: 5px ;">
+                  <button type="button"  onclick="get_cate('{{cate2.id}}','{{order.id}}')" class="btn btn-outline-info ">
+                    {%if LANGUAGE_CODE == 'ar'%}
+                      {{cate2.name_ar}}
+            {% else %}    
+            {{cate2.name}}
+            {% endif %}
+                  </button>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+              </div>
+              <br>{% endfor %}
+              </div>
+              <section>
+                  <div class="row d-flex align-items-start">
+                {% for product in products %}
+                {% if product.digital_menu and product.pos %}
+                <div class="card" style="width: 110px; height: 200px;">
+                  <img  style="width: 100%; height: 100px;" src="{{product.imageUrl}}" alt="product1">
+                  <div style="width: 100%; height: 40px;">
+
+                    <h5 class="card-title" style="font-size: 11px;">
+                        {%if LANGUAGE_CODE == 'ar'%}
+                      {{product.name_ar}}
+            {% else %}    
+            {{product.name}}
+            {% endif %}
+                        </h5>
+                        </div>
+                    {% if product.discount > 0 %}
+                        <h5 style="font-size: 11px;">{{product.getTotalDiscount | floatformat:2}}</h5>
+                      
+                        <h5 style="text-decoration: line-through; font-size: 11px;">{{product.total_amount | floatformat:2}}</h5>
+                    {% else %}
+                    <h5 style="font-size: 11px;">{{ product.total_amount | floatformat:2}}</h5>
+                    {% endif %}
+                    <a href="#" class="btn btn-primary update-cart" data-category="{{item.product_id.Category_id.id}}" data-product="{{product.id}}" data-order="{{order.id}}" data-action="add">{%trans "ADD" %}</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+              </section>
+            </div>
+            <div id="calc" class="col-md-3 border-left">
+              
+              
+              <!-- Start Calculator  -->
+              
+              <div id="list">
+                <div class="row">
+                  {% for o in order2 %}
+                  <a href="#" id="view" onclick="get_order('{{o.id}}')" class="card-link">
+                  <div  class="col-md-6">
+                    <div class="card text-center m-1" >
+                      <div class="card-body">
+                        <h5 class="card-title">{%trans "Order #" %}{{o.id}}</h5>
+                        <h6 class="card-title">{%trans "Table #" %}{{o.table_no}}</h6>
+                        <a href="#" id="view" onclick="get_order('{{o.id}}')" class="card-link"></a>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  </a>
+                  {% endfor %}
+                </div>
+              </div>
+              
+              <!-- End Calculator  -->
+              
+              
+              <table class="table" >
+                <thead>
+                <tr>
+                   <th scope="col">{%trans "Order #" %}{{order.id}}</th>
+                   <th scope="col">{%trans "Table #" %}{{order.table_no}}</th>
+                   <th scope="col">{%trans "Customer #" %}{{order.table_no}}</th>
+                </tr>   
+                  <tr>
+                    <th scope="col">{%trans "item" %}</th>
+                    <th scope="col">{%trans "price" %}</th>
+                    <th scope="col">{%trans "qty." %}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in items %}
+                  <tr>
+                    <td >{{item.name}}</td>
+                    <td>{{item.unit_price| floatformat:2}}</td>
+                    <td>        <div class="input-group">
+                      <span class="input-group-prepend">
+                        <button type="button" class="btn btn-outline-secondary btn-number update-cart" data-product="{{item.product_id.id}}" data-category="{{item.product_id.Category_id.id}}" data-action="delete" data-order="{{item.order.id}}" data-type="minus" data-field="quant[1]">
+                          <span class="fa fa-minus"></span>
+                        </button>
+                      </span>
+                      <input type="text" name="quant[1]" class="form-control input-number" value="{{item.quantity}}" min="1" max="10">
+                      <span class="input-group-append">
+                        <button type="button" class="btn btn-outline-secondary btn-number update-cart" data-product="{{item.product_id.id}}" data-category="{{item.product_id.Category_id.id}}" data-action="add" data-order="{{item.order.id}}" data-type="plus" data-field="quant[1]">
+                          <span class="fa fa-plus"></span>
+                        </button>
+                      </span>
+                    </div></td>
+                  </tr>
+                  {% endfor %}
+                  <tr></tr>
+                  <tr>
+                    <th>{%trans "Sub Total:" %}</th>
+                    <td>{{order.sub_total| floatformat:2 }}</td>
+                  </tr>
+                  <tr>
+                    <th>{%trans "Tax:" %}</th>
+                    <td>{{ order.tax| floatformat:2 }}</td>
+                  </tr>
+                  <tr>
+                    <th>{%trans "Discount:" %}</th>
+                    <td>{{order.total_discount | floatformat:2 }}</td>
+                  </tr>
+                  <tr>
+                    <th>{%trans "Total:" %}</th>
+                    <td>{{order.total_amount | floatformat:2 }}</td>
+                    <!--<td>{{tax|add:sub_total }}</td>-->
+                  </tr>
+                </tbody>
+              </table>
+              
+              <form method="GET" id="order-form">
+                {% csrf_token %}
+                
+                <label for="order_type">{%trans "Order Type:" %}</label>
+                <select name="order_type" id="order_type">
+                  <option value="Dinin">{%trans "Dinin" %}</option>
+                  <option value="Take Away">{%trans "Take Away" %}</option>
+                </select>
+                <br>
+                <label for="order_type">{%trans "Waiter Name:" %}</label>
+                <input type="text" name="waiter_name" value="{{order.waiter_name}}" id="waiter_name"/>
+                <br>
+                
+                <label for="order_type">{%trans "Table Number:" %}</label>
+                <input type="text" name="table_num" value="{{order.table_no}}" id="table_num"/>
+                <br>
+                <label for="payment_type">{%trans "Payment Type:" %}</label>
+                <select name="payment_type" id="payment_type">
+                  <option value="{{order.payment_name}}" selected hidden>{{order.payment_name}}</option>
+                  <option value="cash">{%trans "Cash" %}</option>
+                  <option value="card">{%trans "Card" %}</option>
+                </select>
+                <br>
+                <input type="text" name="orderId" hidden value="{{order.id}}" id="orderId"/>
+                <input type="text" name="action" hidden value="submit" id="action"/>
+                <button type="submit" class="btn btn-primary" id="subb">{%trans "Submit" %}</button>
+                <br>
+              </form>
+              
+              <br>
+              
+              {% if order.id %}
+              <button id="print" onclick="lastcheck('invoice_details{{order.id}}','{{order.id}}','Closed',checkout);" class="btn btn-outline-secondary">{%trans "Checkout" %}</button>
+              {% endif %}
+              
+              <a href="#" class="btn btn-danger update-cart" data-order="{{order.id}}" data-action="Canceled">{%trans "Cancel Order" %}</a>
+              
+            </div>
+            <hr>
+          </div>
+        </div>
+      </div>
+      
+      <script>
+        const $btnPrint = document.querySelector("#btnPrint");
+        
+        $btnPrint.addEventListener("click", () => {
+          window.print();
+        });
+      </script>
+      
+      
+      <script>
+        function lastcheck(el, oid, action, myCallback) {
+        //   $('#subb').click();
+          myCallback(el, oid, action);
+          $.ajax({
+            url: '',
+            data : {
+              'orderId': oid,
+              'action': 'Closed',
+            },
+            success: function (data) {
+              console.log("checout 2: action ", action)
+              $("#products").html(data);
+              console.log("checout 3: action ", action)
+            }
+          });
+        }
+        
+        function checkout(el, oid, action){
+          console.log("checout 1: action ", action)
+          
+          $.ajax({
+            url: '',
+            data : {
+              'orderId': oid,
+              'action': 'Closed',
+            },
+            success: function (data) {
+              printContent(el);
+              console.log("checout 2: action ", action)
+              $("#products").html(data);
+              console.log("checout 3: action ", action)
+            }
+          });
+          console.log("checout 4: action ", action)
+        }
+        
+        function printContent(el){
+          var restorepage = $('body').html();
+          var printcontent = $('#' + el).clone();
+          $('body').empty().html(printcontent);
+          window.print();
+          $('body').html(restorepage);
+        }
+      </script>
+      
+      {% block inner_js %}
+      <script>
+        function get_cate(id,oid){
+          $.ajax({
+            url: '',
+            data : {
+              'cate_id': id,
+              'orderId': oid
+              
+            },
+            success: function (data) {
+              $("#products").html(data);
+            }
+          });
+        }
+      </script>
+      
+      <script>
+        function get_parent_cate(id,oid){
+          $.ajax({
+            url: '',
+            data : {
+              'parent_cate_id': id,
+              'orderId': oid
+              
+            },
+            success: function (data) {
+              $("#products").html(data);
+            }
+          });
+        }
+      </script>
+      
+      
+      <script type="text/javascript">
+        $(document).on('submit','#order-form',function(e){
+          let d ={
+            waiter_name:$("#waiter_name").val(),
+            table_num:$("#table_num").val(),
+            payment_type:$("#payment_type").val(),
+            orderId:$("#orderId").val(),
+            action:$("#action").val(),
+            order_type:$("#order_type").val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          };
+          var w=$("#action").val();
+          console.log("submit 1: action submit");
+          e.preventDefault(w);
+          $.ajax({
+            type:'GET',
+            url:'',
+            data:d,
+            success: function (data) {
+              console.log("submit 2: action submit");
+              $("#products").html(data);
+              console.log("submit 3: action submit");
+            }
+          })
+          console.log("submit 4: action submit");
+          
+        });
+      </script>
+      
+      <script>
+        var updateBtn = document.getElementsByClassName('update-cart');
+        for(var i= 0; i< updateBtn.length; i++){
+          updateBtn[i].addEventListener('click',function(){
+            var productId = this.dataset.product
+            var action = this.dataset.action
+            var orderId = this.dataset.order
+            var cate_id = this.dataset.category
+            console.log('product',productId, 'action', action, 'order', orderId)
+            order_items(productId, action, orderId, cate_id)
+          })
+        }
+        
+        function addCookieItem(productId, action, orderId){
+          
+          
+          if (action == 'add'){
+            if (cart[productId] == undefined){
+              cart[productId] = {'quantity' :1}
+            }
+            else{
+              cart[productId]['quantity'] += 1
+            }
+          }
+          if (action == 'delete'){
+            cart[productId]['quantity'] -= 1
+            if( cart[productId]['quantity'] <= 0){
+              console.log('item deleted')
+              delete cart[productId];
+            }
+          }
+          console.log('cart ', cart)
+          document.cookie ='cart='+ JSON.stringify(cart)+';domain=;path=pos/<id>'
+          }
+          function order_items(productId, action, orderId, cate_id){
+            
+            console.log('product',productId, action)
+            // let d = {
+            //     'productId': productId,
+            //     'action': action,
+            //     'orderId': orderId
+            
+            //   };
+            var form = $(this);
+            
+            $.ajax({
+              url: '',
+              data : {
+                'productId': productId,
+                'action': action,
+                'orderId': orderId,
+                'cate_id': cate_id
+                
+              },
+              success: function (data) {
+                if (action == "Canceled"){
+                  $('#newOrder').click();
+                  
+                  $("body").html(data);
+                  
+                  
+                  
+                }
+                else{
+                  $("body").html(data)
+                }
+              }
+              //   $("body").html(data)
+              // $('#calc').html(
+              // $('<div />').html(data).find('#calc').html()
+              // );
+              
+              
+            });
+          }
+        </script>
+        
+        <script>
+          function get_order(id){
+            $.ajax({
+              data : {
+                'orderId': id,
+              },
+              success: function (data) {
+                $("body").html(data)
+                showDiv(id)
+              }
+            });
+          }
+        </script>
+        <script>
+          function showDiv(id) {
+            var x = document.getElementById("invoice_details"+id);
+            if (x.style.display === "none") {
+              x.style.display = "block";
+            } else {
+              x.style.display = "block";
+            }
+          }
+        </script>
+        
+        {% endblock inner_js %}
+{% endblock %}

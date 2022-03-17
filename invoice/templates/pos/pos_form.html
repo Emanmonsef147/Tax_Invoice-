@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td>Item Code</td>
+        <td>Item Name</td>
+        <td>Price</td>
+        <td>Quantity</td>
+        <td>Taxable Amount</td>
+        <td>Discount</td>
+        <td>Tax Rate</td>
+        <td>Tax Amount </td>
+        <td> Sub Total </td>
+       
+      
+    </tr>
+    </thead>
+
+    <tbody>
+    {% for products in product %}
+    <tr>
+
+        <td>{{products.item_code}}</td>
+        <td>{{products.item_name}}</td>
+        <td >
+            <input type="text" name="quantity" class="form-control qty-input text-center" value="{{products.price}}" id="price" onkeyup="cal(this.value)" readonly></td>
+        <td><div class="col-md-3 my-auto">
+            <input type="hidden" class="prod_id" >
+            {% csrf_token %}
+            <label for="Quantity">Quantity</label>
+            <div class="input-group text-center mb-3" style="width: 130px;">
+                <!--<button class="input-group-text changeQuantity decrement-btn">-</button>-->
+                <input type="text" name="quantity" class="form-control qty-input text-center" id="quantity" onkeyup="cal(this.value)">
+                <!--<button class="input-group-text  changeQuantity increment-btn">+</button>-->
+            </div>
+        </div>
+    </td>
+    <td>
+        <div class="col-md-6" >
+            <label>Taxable Amount :</label>
+            <input type="text" class="form-control" id ="total" >
+        </div>
+    </td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<script>
+   function cal(price,quantity) {
+      p =  document.getElementById("price").value;
+      Q = document.getElementById("quantity").value;
+       var total = p * Q
+       document.getElementById("total").value = total
+
+   }
+</script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block content %}
+{% block custom_css %}
+<style>
+    @media print {
+        #btnPrint {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock custom_css %}
+
+<div class="col-12" style="margin-top: 40px">
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-md-5">
+
+                <table class="table table-bordered border-primary">
+
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Date Of Supply</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{invoice_data.date_of_supply}}"
+                                   readonly>
+                        </td>
+                        <td style="text-align:center">تاريخ التوريد</td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align:center">Branch</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{invoice_data.branch}}" readonly>
+                        </td>
+                        </td>
+                        <td style="text-align:center"> الفرع</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">Salesman Name</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{invoice_data.salesman_name}}" readonly></td>
+                        </td>
+                        <td style="text-align:center"> اسم البائع</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="col-md-5">
+
+                <table class="table table-bordered border-primary" style="margin-left: 215px;">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">Invoice Number</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{invoice_data.invoice_number}}" readonly>
+                        </td>
+                        <td style="text-align:center"> رقم الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Invoice issue Date</td>
+                        <td><input type="text" name="pos" class="form-control"
+                                   value="{{invoice_data.invoice_issue_date}}" readonly>
+                        </td>
+                        <td style="text-align:center"> تاريخ اصدار الفاتوره</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center"> Page No</td>
+                        <td><input type="text" name="pos" class="form-control" value="{{invoice_data.page_number}}"
+                                   readonly>
+                        </td>
+                        <td style="text-align:center"> رقم الصفحه</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+    </div>
+
+</div>
+
+
+
+{% endblock content %}

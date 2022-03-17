@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container"  style="margin-top: 40px">
+    <div class="card-header">
+        <a href="{% url 'pos_create' %}" class="btn btn-light" style="float:right">
+            <i class="fas fa-plus"></i>Add New
+        </a>
+
+        <h2>Invoice List</h2>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Invoice Number</td>
+            <td>Invoice Issue Date</td>
+            <td>Invoice Supply Date</td>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for invoice in invoice_list %}
+        <tr>
+            <td>{{invoice.invoice_number}}</td>
+            <td>{{invoice.invoice_issue_date}}</td>
+            <td>{{invoice.date_of_supply}}</td>
+
+            <td>
+
+                <a href="{% url 'invoice_view' invoice.id  %}" class="btn text-secondary px-0">
+                    <i class="fas fa-eye fa-lg"></i>
+                </a>
+                <a href="{% url 'pos_pdf' invoice.id %}" class="btn text-secondary px-0">
+                    <i class="fas fa-file-pdf fa-lg"></i>
+                </a>
+
+                <form action="{% url 'pos_delete'  invoice.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">
+                        <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+
+                    </button>
+                </form>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+</div>
+
+{% endblock content %}

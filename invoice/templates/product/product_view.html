@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card-header">
+        <h2 > Products & Services View</h2>
+     </div>
+    <table class="table table-striped">
+       <tbody>
+          <tr>
+             <td>
+                <form action="" method="post" autocomplete="off" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    <div class="row">
+                        <div class="col-md-3">
+                            
+                            <label>Item Code:</label>
+                            <input type="text" class="form-control" value="{{product_view.item_code}}" readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Item Name:</label>
+                            <input type="text" class="form-control" value="{{product_view.item_name}}" readonly>
+                          
+                        </div>
+                         <div class="col-md-6">
+                            <label>Item Name In Arabic:</label>
+                            <input type="text" class="form-control" value="{{product_view.item_name_in_arabic}}" readonly>
+
+                        </div>
+                        <div class="col-md-3">
+                            <label>Price :</label>
+                            <input type="text" class="form-control" value="{{product_view.price}}" readonly>
+                        </div>
+                        
+                    </div>
+            </form>
+
+             </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock content %}

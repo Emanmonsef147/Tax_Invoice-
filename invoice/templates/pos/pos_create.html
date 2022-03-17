@@ -1,0 +1,672 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+{% block custom_css %}
+<style type="text/css" media="all">
+    @media print {
+        @page {
+            size: 5.5in 8.5in;
+            size: landscape;
+        }
+
+        #btnPrint {
+            display: none !important;
+        }
+
+        table,
+        td {
+            
+            margin: 0;
+            text-align: center;
+        }
+
+        table #table1 {
+            float: left;
+            margin-left: 120px;
+
+        }
+
+        table #table2 {
+            float: right;
+            margin-right: 120px;
+        }
+
+        table #table3 {
+            float: left;
+            margin-left: 120px;
+        }
+
+        table #table4 {
+            float: right;
+            margin-right: 120px;
+
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        display: flex;
+        margin-left: -5px;
+        margin-right: -5px;
+    }
+
+    .column {
+        flex: 50%;
+        padding: 5px;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+       
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 16px;
+    }
+</style>
+{% endblock custom_css %}
+
+<div class="col-12" style="margin-top: 40px">
+
+    <div class="card-body">
+
+        <div class="row">
+            <div class="column">
+
+                <form id="form" method="post" autocomplete="off">
+                    {%csrf_token%}
+
+                    <table class="table table-bordered border-primary">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align:center">Date Of Supply</td>
+                                <td>{{invoice_form.date_of_supply}}</td>
+                               
+                                <td style="text-align:center">تاريخ التوريد</td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:center">Branch</td>
+                                
+                                <td>{{invoice_form.branch}}</td>
+
+                                <td style="text-align:center"> الفرع</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:center">Salesman Name</td>
+                              
+                                <td>{{invoice_form.salesman_name}}</td>
+
+                                <td style="text-align:center"> اسم البائع</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+
+            <div class="column">
+                <table class="table table-bordered border-primary">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:center">Invoice Number</td>
+                            <td>{{invoice_form.invoice_number}}</td>
+                            
+
+                            <td style="text-align:center"> رقم الفاتوره</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center"> Invoice issue Date</td>
+                            <td>{{invoice_form.invoice_issue_date}}</td>
+                           
+
+                            <td style="text-align:center"> تاريخ اصدار الفاتوره</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:center"> Page No</td>
+                            <td>{{invoice_form.page_number}}</td>
+                           
+
+                            <td style="text-align:center"> رقم الصفحه</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div class="column">
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <thead>
+
+                                    <th></th>
+                                    <th></th>
+                                    <th style="text-align:right">المورد</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">Name</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.organization_name }}" style="height:25px"
+                                                readonly>
+                                        </td>
+
+                                        <td style="text-align:center">الاسم</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Building No</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.building_number }}" style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center">رقم المبني</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Street Name</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.street_name }}" style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center">اسم الشارع</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">District</td>
+                                        <td><input type="text" class="form-control" value="{{ setting_data.district }}"
+                                                style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center"> الحي</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">City</td>
+                                        <td><input type="text" class="form-control" value="{{ setting_data.city }}"
+                                                style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center"> المدينة</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Country</td>
+                                        <td><input type="text" class="form-control" value="{{ setting_data.country }}"
+                                                style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center">البلد</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Postal Code</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.postal_code }}" style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center">الرمز البريدي</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center"> Additional No</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.additional_number }}" style="height:25px"
+                                                readonly>
+                                        </td>
+
+                                        <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <td style="text-align:center">VAT Number</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.vat_number }}" style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center">الرقم الضريبي</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Other Seller ID</td>
+                                        <td><input type="text" class="form-control"
+                                                value="{{ setting_data.other_seller_id }}" style="height:25px" readonly>
+                                        </td>
+
+                                        <td style="text-align:center"> معرف اخر</td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="column">
+                            <table class="table table-bordered">
+                                <thead>
+
+                                    <th>Buyer</th>
+                                    <th></th>
+                                    <th style="text-align: right">العميل</th>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center">Name</td>
+                                        <td>{{invoice_form.buyer_organization_name}}</td>
+                                       
+                                        <td style="text-align:center">الاسم</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Building No</td>
+                                      
+                                        <td>{{invoice_form.building_number}}</td>
+                                        <td style="text-align:center">رقم المبني</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Street Name</td>
+                                      
+                                        <td>{{invoice_form.street_name}}</td>
+                                        <td style="text-align:center">اسم الشارع</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">District</td>
+                                       
+                                        <td>{{invoice_form.district}}</td>
+
+                                        <td style="text-align:center"> الحي</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">City</td>
+                                        
+                                        <td>{{invoice_form.city}}</td>
+
+                                        <td style="text-align:center"> المدينة</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Country</td>
+                                      
+                                        <td>{{invoice_form.country}}</td>
+                                        <td style="text-align:center">البلد</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Postal Code</td>
+                                       
+                                        <td>{{invoice_form.postal_code}}</td>
+
+                                        <td style="text-align:center">الرمز البريدي</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center"> Additional No</td>
+                                      
+                                        <td>{{invoice_form.additional_number}}</td>
+
+                                        <td style="text-align:center"> رقم اضافي للعنوان</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">VAT Number</td>
+                                    
+                                        <td>{{invoice_form.vat_number}}</td>
+
+                                        <td style="text-align:center">الرقم الضريبي</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:center">Other Buyer ID</td>
+                                      
+                                        <td>{{invoice_form.other_buyer_id}}</td>
+                                        <td style="text-align:center"> معرف اخر</td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card-body">
+                    {% for product in products %}
+                    <a onclick="myFunction(
+                            '{{product.id}}' , '{{product.item_name}}', '{{product.item_code}}', '{{product.price}}')"
+                        class="btn btn-outline-dark">
+                        {{ product.item_name }}
+                    </a>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+               
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><strong>Order Summary</strong></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed">
+                                            <thead>
+                                                <tr>
+                                                  
+                                                    <td class="text-right"><strong>Description</strong></td>
+                                                    
+                                                    <td class="text-right"><strong>Price</strong></td>
+                                                    <td class="text-right"><strong>Quantity</strong></td>
+                                                    <td class="text-right"><strong>Taxable Amount</strong></td>
+                                                    <td class="text-right"><strong>Tax percentage</strong></td>
+                                                    <td class="text-right"><strong>Tax Amount</strong></td>
+                                                    <td class="text-right"><strong>Sub Total</strong></td>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="summary-table-body">
+                                                <tr id="total-tr">
+
+                                                    {% comment %} <td class="thick-line text-right"><strong>Total:
+                                                        </strong></td>
+                                                    <td class="thick-line text-right"><strong>C </strong></td>
+                                                    <td class="thick-line text-right"><strong>$0 </strong></td>
+                                                </tr> {% endcomment %}
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered" style="float:right; width:700px">
+
+                
+                                                    <tr>
+
+                                                        <td>Total</td>
+                                                        <td>
+                                                            <input type="number" id="total">
+                                                        </td>
+
+
+
+                                                    </tr>
+                                        
+
+                                                    <tr>
+                                                        <td>Discount</td>
+
+                                                        <td>
+                                                            <input type="number" id="discount" value="0">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>Total Taxable Amount</td>
+                                                        <td>
+                                                            <input type="number" id="total_amount">
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total VAT</td>
+
+                                                        <td>
+                                                            <input type="number" id="total_vat">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Total Amount Due</td>
+
+                                                        <td>
+                                                            <input type="number" id="amount_due">
+                                                        </td>
+                                                    </tr>
+                                               
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script>
+                var i = 1;
+                var t = 0;
+                var v = 0;
+                function myFunction(id, item_name, item_code, price) {
+                    var table = document.getElementById("summary-table-body");
+                    var row = table.insertRow(0);
+                  
+                    var td_name = row.insertCell(0);
+                   
+                    var td_price = row.insertCell(1);
+                    var td_quantity = row.insertCell(2);
+                    var td_taxable_amount = row.insertCell(3);
+                    var td_tax_rate = row.insertCell(4);
+                    var td_tax_amount = row.insertCell(5);
+                    var td_sub_total = row.insertCell(6);
+
+
+
+                    row.setAttribute("id", "foo");
+                    var price_id = "price".concat(i);
+                    var quantity_id = "quantity".concat(i);
+                    var taxable_amount_id = "taxable_amount".concat(i);
+
+                    var tax_rate_id = "tax_rate".concat(i);
+
+                    var tax_amount_id = "tax_amount".concat(i);
+                    var sub_total_id = "sub_total".concat(i);
+
+
+                    td_price.setAttribute("id", price_id);
+                    td_quantity.setAttribute("id", quantity_id);
+
+                    /*td_id.innerHTML = '' + id;*/
+                    td_name.innerHTML = '' + item_name;
+                   /* td_code.innerHTML = '' + item_code;*/
+                    td_price.innerHTML = '' + price;
+                    td_quantity.innerHTML = "<input type='number'  id='quant" + i + "'>";
+                    td_taxable_amount.innerHTML = "<input type='number' id='taxable_amount" + i + "'>";
+
+                    td_tax_rate.innerHTML = "<input type='number'  id='tax" + i + "'>";
+
+                    td_tax_amount.innerHTML = "<input type='number' id='tax_amount" + i + "'>";
+                    td_sub_total.innerHTML = "<input type='number' id='sub_total" + i + "'>";
+
+
+                    i++;
+
+                    var rowCount = $("#summary-table-body tr").length;
+                    $(document).ready(function () {
+
+                        for (let j = 1; j <= rowCount; j++) {
+
+                            $("#quantity" + j).change(function () {
+
+                                var price = document.getElementById("price" + j).innerHTML;
+                                console.log(price);
+                                var quantity = $("#quant" + j).val();
+                                console.log(quantity);
+                                var taxable = price * quantity;
+                                console.log(taxable);
+                                $("#taxable_amount" + j).val(taxable);
+
+                                $("#tax" + j).change(function () {
+                                    var rate = $("#tax" + j).val();
+
+                                    var tax_amount = (taxable * rate) / 100;
+                                    $("#tax_amount" + j).val(tax_amount);
+
+                                    var sub_total = (taxable + tax_amount);
+                                    console.log(sub_total)
+                                    $("#sub_total" + j).val(sub_total);
+
+                                   /* console.log(t);
+                                    t += sub_total;
+                                    console.log(t);
+                                   $("#total").val(t);*/
+  
+
+                                   console.log(t);
+                                    t += taxable;
+                                    console.log(t);
+                                   $("#total").val(t);
+                                   $("#total_amount").val(t); 
+                                    console.log(v);
+                                    v += tax_amount;
+                                    console.log(v);
+                                   $("#total_vat").val(v);
+                                  
+                                   
+                                   
+                                   var total_amount_due = t + v;
+                                   console.log(total_amount_due);
+                                   $("#amount_due").val(total_amount_due);
+
+                                });
+
+                            });
+                        }
+
+
+                    });
+                    /*tr.appendChild(td_id);*/
+                    tr.appendChild(td_name);
+                   /* tr.appendChild(td_code);*/
+                    tr.appendChild(td_price);
+                    tr.appendChild(td_quantity);
+                    tr.appendChild(td_taxable_amount);
+                    tr.appendChild(td_tax_rate);
+                    tr.appendChild(td_tax_amount);
+                    tr.appendChild(td_sub_total);
+
+                }
+
+            </script>
+
+
+        
+
+    <br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+       
+
+        <button type="submit" class="btn btn-primary btn-block">
+            <i class="fa-solid fa-bookmark"></i>
+            Close Bill
+        </button>
+        &nbsp;
+
+        <a href="{% url 'invoice_pos_list' %}" class="btn btn-primary btn-block float_right"><i
+                class="fa-solid fa-list"></i>
+
+            Back to list</a>
+
+    </div>
+</div>
+</div>
+
+</form>
+</div>
+</div>
+</div>
+
+
+<!-- New working outside the form -->
+{% comment %} <form id="form-container" method="POST">
+    {% csrf_token %}
+
+    <div class="pos-form">
+        <div class="row">
+
+
+            <div class="col-md-2">
+                {{invoice_form.description|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.unit_price|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.quantity|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.taxable_amount|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.discount|as_crispy_field}}
+            </div>
+            <div class="col-md-2">
+                {{invoice_form.tax_rate|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.tax_amount|as_crispy_field}}
+            </div>
+            <div class="col-md-1">
+                {{invoice_form.sub_total|as_crispy_field}}
+            </div>
+        </div>
+
+    </div>
+
+    <input type="hidden" name="form-TOTAL_FORMS" value="1" id="id_form-TOTAL_FORMS">
+    <input type="hidden" name="form-INITIAL_FORMS" value="0" id="id_form-INITIAL_FORMS">
+    <input type="hidden" name="form-MIN_NUM_FORMS" value="0" id="id_form-MIN_NUM_FORMS">
+    <input type="hidden" name="form-MAX_NUM_FORMS" value="1000" id="id_form-MAX_NUM_FORMS">
+
+    <button id="add-form" type="button">Add Another</button>
+    <button type="submit">Create</button>
+</form>
+
+<script>
+    let birdForm = document.querySelectorAll(".pos-form")
+    let container = document.querySelector("#form-container")
+    let addButton = document.querySelector("#add-form")
+    let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+    let formNum = birdForm.length - 1
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e) {
+        e.preventDefault()
+
+        let newForm = birdForm[0].cloneNode(true)
+        let formRegex = RegExp(`form-(\\d){1}-`, 'g')
+
+        formNum++
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+        container.insertBefore(newForm, addButton)
+
+        totalForms.setAttribute('value', `${formNum + 1}`)
+    }
+</script> {% endcomment %}
+
+<script src="{% static 'js/script.js' %}"></script>
+
+{% endblock %}
